@@ -29,13 +29,14 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                break;
+                return ExampleFragment.getInstance();
 
             case 1:
                 return ExampleFragment.getInstance();
 
             case 2:
-                break;
+                return ExampleFragment.getInstance();
+
 
 
         }
