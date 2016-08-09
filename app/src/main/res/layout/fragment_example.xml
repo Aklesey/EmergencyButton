@@ -5,6 +5,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hellow world"/>
+        android:text="@string/hellow_world"/>
 
 </LinearLayout>
