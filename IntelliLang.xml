@@ -5,5 +5,9 @@
     <option name="PATTERN_ANNOTATION" value="org.intellij.lang.annotations.Pattern" />
     <option name="SUBST_ANNOTATION" value="org.intellij.lang.annotations.Subst" />
     <option name="RESOLVE_REFERENCES" value="true" />
+    <injection language="AIDL" injector-id="xml">
+      <display-name>resources</display-name>
+      <place><![CDATA[xmlTag().withLocalName(string().equalTo("resources"))]]></place>
+    </injection>
   </component>
 </application>
