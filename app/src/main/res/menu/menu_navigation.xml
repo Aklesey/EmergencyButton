@@ -2,10 +2,20 @@
     <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_notification_item"
-        android:icon="@mipmap/ic_message_text"
+        android:id="@+id/action_contact"
+        android:icon="@mipmap/ic_contact_mail"
         android:orderInCategory="1"
-        android:title="@string/menu_item_notification" />
+        android:title="@string/menu_item_contact" />
+    <item
+        android:id="@+id/action_settirng"
+        android:icon="@mipmap/ic_settings"
+        android:orderInCategory="2"
+        android:title="@string/menu_item_settings" />
+    <item
+        android:id="@+id/action_history"
+        android:icon="@mipmap/ic_history"
+        android:orderInCategory="3"
+        android:title="@string/menu_item_history" />
 
 
 
