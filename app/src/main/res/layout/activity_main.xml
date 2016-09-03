@@ -16,6 +16,7 @@
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.Toolbar
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -31,6 +32,7 @@
                 app:tabTextColor="@android:color/white" />
 
 
+
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.view.ViewPager
@@ -38,6 +40,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm"
+            android:id="@+id/buttonAlarm"
+            android:layout_gravity="end|bottom"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:background="#ff0000"/>
 
     </android.support.design.widget.CoordinatorLayout>
 
@@ -48,5 +62,8 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/navigation_headr"
         app:menu="@menu/menu_navigation" />
+
+
+
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,5 +1,7 @@
 package com.qoobico.emergencybutton;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -9,8 +11,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
-import com.qoobico.emergencybutton.adapter.TabsPagerFragmentAdapter;
+import com.qoobico.emergencybutton.adapter.TabsFragmentAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
+    private Button buttonAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,15 @@ public class MainActivity extends AppCompatActivity {
         initNavigationView();
         initTabs();
 
+        buttonAlarm = (Button) findViewById(R.id.buttonAlarm);
+        buttonAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+380983085009"));
+                startActivity(dialIntent);
+
+            }
+        });
 
     }
 
@@ -47,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initTabs() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
+        TabsFragmentAdapter adapter = new TabsFragmentAdapter(this, getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -66,17 +80,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 drawerLayout.closeDrawers();
-                switch (menuItem.getItemId()){
-                    case R.id.action_notification_item:
-                        showNotifikationTab();
+                switch (menuItem.getItemId()) {
+                    case R.id.action_contact:
+                        showContactTab();
+                        break;
+                    case R.id.action_settirng:
+                        showSettingsTab();
+                        break;
+                    case R.id.action_history:
+                        showHistoryTab();
+                        break;
                 }
                 return true;
             }
         });
     }
 
+    private void showHistoryTab() {
+        viewPager.setCurrentItem(Constant.TAB_THREE);
+    }
 
-    private void showNotifikationTab(){
+    private void showSettingsTab() {
         viewPager.setCurrentItem(Constant.TAB_TWO);
+    }
+
+    private void showContactTab() {
+        viewPager.setCurrentItem(Constant.TAB_ONE);
     }
 }
