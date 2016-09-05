@@ -13,8 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.qoobico.emergencybutton.adapter.TabsFragmentAdapter;
+import com.qoobico.emergencybutton.fragment.AddContactActivity;
+import com.qoobico.emergencybutton.fragment.EditContactActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
-    private Button buttonAlarm;
+    private String phone;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +40,24 @@ public class MainActivity extends AppCompatActivity {
         initNavigationView();
         initTabs();
 
-        buttonAlarm = (Button) findViewById(R.id.buttonAlarm);
+
+        Button buttonAlarm = (Button) findViewById(R.id.buttonAlarm);
         buttonAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+380983085009"));
-                startActivity(dialIntent);
-
+               phone = "466";
+                call();
             }
         });
-
     }
+
+    public void call() {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:"+phone));
+      startActivity(callIntent);
+    }
+
+
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -106,5 +118,27 @@ public class MainActivity extends AppCompatActivity {
 
     private void showContactTab() {
         viewPager.setCurrentItem(Constant.TAB_ONE);
+    }
+
+    public void newScreen(View view) {
+        Intent SecAct = new Intent(getApplicationContext(), AddContactActivity.class);
+        startActivity(SecAct);
+    }
+
+    public void newScreen(MenuItem item) {
+        Intent SecAct = new Intent(getApplicationContext(), AddContactActivity.class);
+        startActivity(SecAct);
+    }
+
+    public void contactEdit(MenuItem item) {
+        Intent SecAct = new Intent(getApplicationContext(), EditContactActivity.class);
+        startActivity(SecAct);
+    }
+
+    public void contactDelete(MenuItem item) {
+        new EditContactActivity().contactDeleted();
+        initTabs();
+        Toast.makeText(getApplicationContext(), "Contact has deleted.", Toast.LENGTH_SHORT).show();
+
     }
 }

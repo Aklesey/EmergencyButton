@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:maxLines="1"
+        android:hint="@string/enter_name"
+        android:inputType="textCapWords" />
+
+    <EditText
+
+        android:id="@+id/editNumber"
+        android:maxLines="1"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="@string/enter_number"
+        android:inputType="none" />
+
+    <EditText
+        android:id="@+id/editEmail"
+        android:maxLines="1"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="@string/enter_email"
+        android:inputType="textEmailAddress" />
+
+    <Button
+        android:id="@+id/button_save_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:background="@color/colorWhite"
+        android:onClick="saveContact"
+        android:padding="5dp"
+        android:paddingEnd="7dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:paddingStart="7dp"
+        android:text="@string/save_contact" />
+</LinearLayout>
