@@ -4,9 +4,9 @@ package com.qoobico.emergencybutton.adapter;
  * Created by user on 03.09.2016.
  */
 public class Contact {
-    String title;
-    String tel;
-    String email;
+    private String title;
+    private String tel;
+    private String email;
 
     public Contact(String name, String tel, String email) {
         this.title = name;
@@ -26,15 +26,15 @@ public class Contact {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getTel() {
         return tel;
     }
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
