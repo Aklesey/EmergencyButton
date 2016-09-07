@@ -24,6 +24,15 @@ public class AddContactActivity extends AppCompatActivity {
         return data;
     }
 
+    public static String[] getDataPhoneList() {
+        data = MainActivity.getAllContacts();
+        String[] temp = new String[data.size()];
+        for (int i = 0; i < data.size(); i++) {
+            temp[i] = data.get(i).getTel();
+        }
+        return temp;
+    }
+
     public static void setData(List<Contact> data) {
         AddContactActivity.data = data;
     }
@@ -34,6 +43,7 @@ public class AddContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT_2);
     }
+
     public void saveContact(View view) {
 
         Toast.makeText(getApplicationContext(), "Contact has added.", Toast.LENGTH_SHORT).show();
@@ -42,7 +52,7 @@ public class AddContactActivity extends AppCompatActivity {
         startActivity(SecAct);
     }
 
-    private void fillListAdapter (){
+    private void fillListAdapter() {
         name = (EditText) findViewById(R.id.editName);
         phone = (EditText) findViewById(R.id.editNumber);
         email = (EditText) findViewById(R.id.editEmail);

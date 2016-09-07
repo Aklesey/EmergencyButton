@@ -1,5 +1,7 @@
 package com.qoobico.emergencybutton;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +24,6 @@ import com.qoobico.emergencybutton.adapter.TabsFragmentAdapter;
 import com.qoobico.emergencybutton.fragment.AddContactActivity;
 import com.qoobico.emergencybutton.fragment.EditContactActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,8 +52,11 @@ public class MainActivity extends AppCompatActivity {
         buttonAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                phone = "466";
-                call();
+                try {
+                    call();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         db = new DatabaseHandler(this);
@@ -73,10 +78,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void call() {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:" + phone));
-        startActivity(callIntent);
+    public void call() throws InterruptedException {
+        String[] numbers = AddContactActivity.getDataPhoneList();
+        for (int i = 0; i < numbers.length; ) {
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            CallReceiver callReceiver = new CallReceiver();
+            callReceiver.onReceive(this, callIntent);
+            if (callReceiver.getI() != 10) {
+                phone = numbers[i];
+                callIntent.setData(Uri.parse("tel:" + phone));
+                startActivity(callIntent);
+                Thread.sleep(15000);
+                i++;
+            }
+        }
     }
 
 
@@ -162,4 +177,26 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Contact has deleted.", Toast.LENGTH_SHORT).show();
 
     }
+}
+
+class CallReceiver extends BroadcastReceiver {
+    String phoneNumber = "";
+    int i = 0;
+
+    public int getI() {
+        return i;
+    }
+
+    public void onReceive(Context context, Intent intent) {
+
+        if (intent.getAction().equals("android.intent.action.PHONE_STATE")) {
+            String phone_state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
+            if (phone_state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
+                i = 10;
+            } else if (phone_state.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
+                i = 5;
+            }
+        }
+    }
+
 }
