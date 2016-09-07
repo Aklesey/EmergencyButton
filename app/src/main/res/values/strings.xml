@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Alarm</string>
+    <string name="search_title">Search</string>
+    <string name="menu_item_contact">Contact</string>
+    <string name="menu_item_history">History</string>
+    <string name="menu_item_settings">Setting</string>
+
+    <string name="tab_item_contact">Contact</string>
+    <string name="tab_item_history">History</string>
+    <string name="tab_item_settings">Setting</string>
+
+    <string name="view_navigation_open">Open</string>
+    <string name="view_navigation_close">Close</string>
+    <string name="hellow_world">Hellow world</string>
+    <string name="alarm">ALARM BUTTON</string>
+    <string name="new_contact">New contact</string>
+    <string name="contact_item_edit">Edit</string>
+    <string name="contact_item_delete">Delete</string>
+    <string name="menu_card">menu_card</string>
+    <string name="add_new_contact">Add new contact</string>
+    <string name="save_contact">Save contact</string>
+    <string name="enter_name">Enter name</string>
+    <string name="enter_number">Enter number</string>
+    <string name="enter_email">Enter email</string>
+    <string name="toast_added_contact">Contact has been added.</string>
+</resources>

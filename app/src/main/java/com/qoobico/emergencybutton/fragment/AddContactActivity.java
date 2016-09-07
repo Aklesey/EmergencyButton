@@ -12,13 +12,12 @@ import com.qoobico.emergencybutton.MainActivity;
 import com.qoobico.emergencybutton.R;
 import com.qoobico.emergencybutton.adapter.Contact;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class AddContactActivity extends AppCompatActivity {
     private final static int LAYOUT_2 = R.layout.add_contact_activity;
-    private static List<Contact> data = new ArrayList<>();
+    private static List<Contact> data = MainActivity.getAllContacts();
     EditText name, phone, email;
 
     public static List<Contact> getData() {
@@ -47,7 +46,8 @@ public class AddContactActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.editName);
         phone = (EditText) findViewById(R.id.editNumber);
         email = (EditText) findViewById(R.id.editEmail);
-        data.add(new Contact(name.getText().toString(), phone.getText().toString(), email.getText().toString()));
+        Contact temp = new Contact(name.getText().toString(), phone.getText().toString(), email.getText().toString());
+        MainActivity.addOneContacts(temp);
     }
 }
 

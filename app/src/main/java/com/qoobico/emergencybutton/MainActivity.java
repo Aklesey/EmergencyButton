@@ -15,9 +15,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.qoobico.emergencybutton.DataBase.DatabaseHandler;
+import com.qoobico.emergencybutton.adapter.Contact;
 import com.qoobico.emergencybutton.adapter.TabsFragmentAdapter;
 import com.qoobico.emergencybutton.fragment.AddContactActivity;
 import com.qoobico.emergencybutton.fragment.EditContactActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
     private String phone;
-
+    private static DatabaseHandler db;
 
 
     @Override
@@ -45,18 +50,34 @@ public class MainActivity extends AppCompatActivity {
         buttonAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               phone = "466";
+                phone = "466";
                 call();
             }
         });
+        db = new DatabaseHandler(this);
+
+    }
+
+    public static void addOneContacts(Contact contact) {
+        db.addContact(contact);
+    }
+
+    public static List<Contact> getAllContacts() {
+        return db.getAllContacts();
+    }
+
+    public static void addListContacts(List<Contact> contacts) {
+        db.deleteAll();
+        for (int i = 0; i < contacts.size(); i++) {
+            db.addContact(contacts.get(i));
+        }
     }
 
     public void call() {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:"+phone));
-      startActivity(callIntent);
+        callIntent.setData(Uri.parse("tel:" + phone));
+        startActivity(callIntent);
     }
-
 
 
     private void initToolbar() {

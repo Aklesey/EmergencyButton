@@ -17,7 +17,7 @@ import java.util.List;
 
 public class EditContactActivity extends AppCompatActivity {
     private final static int LAYOUT_2 = R.layout.add_contact_activity;
-    private static List<Contact> data = AddContactActivity.getData();
+    private static List<Contact> data;
     EditText name, phone, email;
     public static int pos;
 
@@ -39,7 +39,7 @@ public class EditContactActivity extends AppCompatActivity {
     }
 
     private void setEditText() {
-//        int i = pos;
+        data = MainActivity.getAllContacts();
         name = (EditText) findViewById(R.id.editName);
         phone = (EditText) findViewById(R.id.editNumber);
         email = (EditText) findViewById(R.id.editEmail);
@@ -50,7 +50,7 @@ public class EditContactActivity extends AppCompatActivity {
 
 
     public void saveContact(View view) {
-
+        data = MainActivity.getAllContacts();
         Toast.makeText(getApplicationContext(), "Contact has changed.", Toast.LENGTH_SHORT).show();
         fillListAdapter();
         Intent SecAct = new Intent(getApplicationContext(), MainActivity.class);
@@ -58,17 +58,18 @@ public class EditContactActivity extends AppCompatActivity {
     }
 
     private void fillListAdapter() {
+        data = MainActivity.getAllContacts();
         data.remove(pos);
         data.add(pos, new Contact(name.getText().toString(),
                 phone.getText().toString(), email.getText().toString()));
-        AddContactActivity.setData(data);
+        MainActivity.addListContacts(data);
     }
 
 
     public void contactDeleted() {
+        data = MainActivity.getAllContacts();
         data.remove(pos);
-        AddContactActivity.setData(data);
-
+        MainActivity.addListContacts(data);
     }
 }
 
