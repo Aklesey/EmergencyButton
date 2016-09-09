@@ -33,22 +33,25 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
-    private String phone;
     private static DatabaseHandler db;
+    public static boolean first = false;
+    public static boolean second = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("I got volume up event");
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
-
         initToolbar();
         initNavigationView();
         initTabs();
-
-
         Button buttonAlarm = (Button) findViewById(R.id.buttonAlarm);
+        Intent intent = new Intent(this, MyService.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startService(intent);
+
         buttonAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,19 +83,67 @@ public class MainActivity extends AppCompatActivity {
 
     public void call() throws InterruptedException {
         String[] numbers = AddContactActivity.getDataPhoneList();
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        CallReceiver callReceiver = new CallReceiver();
         for (int i = 0; i < numbers.length; ) {
-            Intent callIntent = new Intent(Intent.ACTION_CALL);
-            CallReceiver callReceiver = new CallReceiver();
             callReceiver.onReceive(this, callIntent);
+
             if (callReceiver.getI() != 10) {
-                phone = numbers[i];
-                callIntent.setData(Uri.parse("tel:" + phone));
+
+                callIntent.setData(Uri.parse("tel:" + numbers[i]));
                 startActivity(callIntent);
-                Thread.sleep(15000);
+                Thread.sleep(2500);
                 i++;
             }
+            Thread.sleep(1500);
+
         }
     }
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//
+//        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && event.isLongPress()) {
+//            first = true;
+//        } else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+//            second = true;
+//            System.out.println("true true1");
+//
+//        }
+//
+//        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+//            if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && event.isLongPress()) {
+//                first = true;
+//                second = true;
+//                System.out.println("true true2");
+//
+//            }
+//        }
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onKeyUp(int keyCode, KeyEvent event) {
+//        if (first && second) {
+//            try {
+//                System.out.println("Call call");
+//
+//                long mills = 1000L;
+//                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+//                vibrator.vibrate(mills);
+//                call();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+//            first = false;
+//        } else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+//            second = false;
+//        }
+//        return true;
+//    }
 
 
     private void initToolbar() {
