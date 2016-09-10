@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("I got volume up event");
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
@@ -49,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         initTabs();
         Button buttonAlarm = (Button) findViewById(R.id.buttonAlarm);
         Intent intent = new Intent(this, MyService.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startService(intent);
 
         buttonAlarm.setOnClickListener(new View.OnClickListener() {

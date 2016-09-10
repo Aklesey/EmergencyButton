@@ -5,27 +5,34 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.telephony.PhoneStateListener;
+import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.qoobico.emergencybutton.Gps.GPSTracker;
 import com.qoobico.emergencybutton.fragment.AddContactActivity;
 
 
 public class MyService extends Service {
 
+    static int anInt = 0;
     final String LOG_TAG = "myLogs";
     int screen_status = 0;
     long screen_start_time = 0;
     long screen_max_time = 1250;  //Максимальное время между нажатиями
+    private double lat;
+    private double lon;
 
     BroadcastReceiver mScreenReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_SCREEN_ON)) {
 
@@ -59,13 +66,26 @@ public class MyService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(LOG_TAG, "onStartCommand");
-
         IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(mScreenReceiver, intentFilter);
+        GPSTracker gps = new GPSTracker(this);
+
+        // check if GPS location can get Location
+        if (gps.canGetLocation()) {
+
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                Log.d("Your Location", "latitude:" + gps.getLatitude()
+                        + ", longitude: " + gps.getLongitude());
+
+                lon = gps.getLongitude();
+                lat = gps.getLatitude();
+            }
+        }
 
         someTask();
-
         return super.onStartCommand(intent, flags, START_STICKY);
     }
 
@@ -85,65 +105,81 @@ public class MyService extends Service {
         }
         Log.i(LOG_TAG, "shoto");
         if (screen_status == 3) {
-            task();
+
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.vibrate(1000L);
+
+            listener();
+            sendSMS();
+
         }
     }
 
     protected void task() {
-
         String[] numbers = AddContactActivity.getDataPhoneList();
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        CallReceiver callReceiver = new CallReceiver();
-        callReceiver.onReceive(this, callIntent);
-
-        EndCallListener callListener = new EndCallListener();
-        TelephonyManager mTM = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-        mTM.listen(callListener, PhoneStateListener.LISTEN_CALL_STATE);
-        for (int i = 0; i < numbers.length; ) {
-            if (!EndCallListener.offHook) {
-                try {
-                    callIntent.setData(Uri.parse("tel:" + numbers[i]));
-                    vibroAlarm();
-                    startActivity(callIntent);
-                    i++;
-                } catch (Exception e) {
-                    Log.i(LOG_TAG, e.getMessage());
-                }
-                if (EndCallListener.offHook) {
-                    i++;
-                }
+        if (anInt < numbers.length) {
+            callIntent.setData(Uri.parse("tel:" + numbers[anInt]));
+            try {
+                startActivity(callIntent);
+            } catch (Exception e) {
+                Log.i(LOG_TAG, "___" + e);
             }
-            mTM.listen(callListener, PhoneStateListener.LISTEN_CALL_STATE);
+            anInt++;
+        } else {
+            anInt = 0;
+            voider();
+            stopService(new Intent(this, MyService.class));
+            startService(new Intent(this, MyService.class));
+            return;
+        }
+        Log.i(LOG_TAG, "__=" + anInt);
+    }
+
+    private void sendSMS() {
+        String[] numbers = AddContactActivity.getDataPhoneList();
+        for (int i = 0; i <numbers.length ; i++) {
+            String message = "HELP ME!I'm in trouble";
+            message += "\nhttp://maps.google.com/?q=" + lat + "," + lon;
+
+
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(numbers[i], null, message, null, null);
         }
     }
 
-    private void vibroAlarm() {
-        long mills = 1000L;
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(mills);
+    private void voider() {
+        TelephonyManager mTM = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        mTM.listen(null, PhoneStateListener.LISTEN_NONE);
+    }
+
+    private void listener() {
+        EndCallListener callListener = new EndCallListener(this);
+        TelephonyManager mTM;
+        mTM = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        mTM.listen(callListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
 }
 
 
 class EndCallListener extends PhoneStateListener {
     final String LOG_TAG = "myLogs";
-    static boolean offHook;
+    MyService myService;
+
+    public EndCallListener(MyService myService) {
+        this.myService = myService;
+    }
 
     @Override
     public void onCallStateChanged(int state, String incomingNumber) {
-        if (TelephonyManager.CALL_STATE_RINGING == state) {
-
-            Log.i(LOG_TAG, "RINGING, number: " + incomingNumber);
-        }
         if (TelephonyManager.CALL_STATE_OFFHOOK == state) {
-            offHook = true;            //wait for phone to go offhook (probably set a boolean flag) so you know your app initiated the call.
             Log.i(LOG_TAG, "OFFHOOK");
+
         }
         if (TelephonyManager.CALL_STATE_IDLE == state) {
-            offHook = false;
-            //when this state occurs, and your flag is set, restart your app
             Log.i(LOG_TAG, "IDLE");
+            myService.task();
         }
     }
 }
