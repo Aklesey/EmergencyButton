@@ -29,7 +29,8 @@
                 app:tabIndicatorColor="@android:color/white"
                 app:tabIndicatorHeight="6dp"
                 app:tabSelectedTextColor="@android:color/white"
-                app:tabTextColor="@android:color/white" />
+                app:tabTextColor="@android:color/white"
+                android:fillViewport="false" />
 
 
 
@@ -43,7 +44,6 @@
 
 
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/alarm"
@@ -51,7 +51,9 @@
             android:layout_gravity="end|bottom"
             android:layout_marginRight="@dimen/fab_margin"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:background="#ff0000"/>
+            android:background="@drawable/rounded_button"
+            android:padding="15dp"
+            android:onClick="startAlarmOnButton" />
 
     </android.support.design.widget.CoordinatorLayout>
 

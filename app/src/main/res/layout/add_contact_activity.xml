@@ -9,14 +9,15 @@
         android:id="@+id/editName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
         android:layout_marginTop="5dp"
         android:ems="10"
         android:maxLines="1"
         android:hint="@string/enter_name"
-        android:inputType="textCapWords" />
+        android:inputType="textCapWords"
+        android:padding="10dp" />
 
     <EditText
 
@@ -25,13 +26,14 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
         android:layout_marginTop="5dp"
         android:ems="10"
         android:hint="@string/enter_number"
-        android:inputType="none" />
+        android:inputType="none"
+        android:padding="10dp" />
 
     <EditText
         android:id="@+id/editEmail"
@@ -39,27 +41,24 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
         android:layout_marginTop="5dp"
         android:ems="10"
         android:hint="@string/enter_email"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:padding="10dp" />
 
     <Button
         android:id="@+id/button_save_contact"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:background="@color/colorWhite"
+        android:layout_gravity="right"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/rounded_button_add"
         android:onClick="saveContact"
-        android:padding="5dp"
-        android:paddingEnd="7dp"
-        android:paddingLeft="7dp"
-        android:paddingRight="7dp"
-        android:paddingStart="7dp"
-        android:text="@string/save_contact" />
+        android:padding="15dp"
+        android:text="@string/save_contact"
+        android:layout_margin="10dp" />
 </LinearLayout>

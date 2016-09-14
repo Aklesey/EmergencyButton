@@ -11,13 +11,4 @@
         android:icon="@mipmap/ic_settings"
         android:orderInCategory="2"
         android:title="@string/menu_item_settings" />
-    <item
-        android:id="@+id/action_history"
-        android:icon="@mipmap/ic_history"
-        android:orderInCategory="3"
-        android:title="@string/menu_item_history" />
-
-
-
-
 </menu>

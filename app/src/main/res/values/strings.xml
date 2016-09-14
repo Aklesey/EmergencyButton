@@ -1,17 +1,18 @@
 <resources>
-    <string name="app_name">Alarm</string>
-    <string name="search_title">Search</string>
+    <string name="app_name" >Hidden SOS Sender</string>
+    <string name="search_title" >Search</string>
     <string name="menu_item_contact">Contact</string>
-    <string name="menu_item_history">History</string>
-    <string name="menu_item_settings">Setting</string>
+    <string name="menu_item_settings">Instructions</string>
 
     <string name="tab_item_contact">Contact</string>
-    <string name="tab_item_history">History</string>
-    <string name="tab_item_settings">Setting</string>
+    <string name="tab_item_instructions">Instructions</string>
 
     <string name="view_navigation_open">Open</string>
     <string name="view_navigation_close">Close</string>
-    <string name="hellow_world">Hellow world</string>
+    <string name="how_it_work">How it works?</string>
+    <string name="instructions_1">1. You need to add contacts, which in the future would be made a message and the call will be made. </string>
+    <string name="instructions_2">2. The contacts that have been added will be automatically sent messages with text "Help me I'm in trouble!". and your location. (for the correct display of your location turn location on high accuracy) For all add a contact to be perfect redial.</string>
+    <string name="instructions_3">3. To start the emergency service you need to press the power button 4 times within 3 seconds.</string>
     <string name="alarm">ALARM BUTTON</string>
     <string name="new_contact">New contact</string>
     <string name="contact_item_edit">Edit</string>
@@ -23,4 +24,11 @@
     <string name="enter_number">Enter number</string>
     <string name="enter_email">Enter email</string>
     <string name="toast_added_contact">Contact has been added.</string>
+    <string name="contact_deleting">Contact has deleted.</string>
+    <string name="contact_adding">Contact has added.</string>
+    <string name="contact_chenging">Contact has changed.</string>
+    <string name="permissions_dialog_message">permissions_dialog_message</string>
+    <string name="permissions_dialog_gps_positive_button">permissions_dialog_gps_positive_button</string>
+    <string name="permissions_dialog_gps_negative_button">permissions_dialog_gps_negative_button</string>
+    <string name="permissions_message_same">permissions_message_same</string>
 </resources>

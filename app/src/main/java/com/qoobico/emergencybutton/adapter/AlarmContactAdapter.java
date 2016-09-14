@@ -12,15 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.qoobico.emergencybutton.R;
 import com.qoobico.emergencybutton.fragment.EditContactActivity;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,23 +27,10 @@ public class AlarmContactAdapter extends RecyclerView.Adapter<AlarmContactAdapte
 
     public AlarmContactAdapter(Context mContext, List<Contact> data) {
         this.mContext = mContext;
-        try {
-            FileInputStream fis = new FileInputStream("temp.out");
-            ObjectInputStream oin = new ObjectInputStream(fis);
-            this.data = (List<Contact>) oin.readObject();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
         this.data = data;
     }
 
     private void showPopupMenu(View view) {
-        // inflate menu
         PopupMenu popup = new PopupMenu(mContext, view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.contact_menu, popup.getMenu());
@@ -65,13 +47,10 @@ public class AlarmContactAdapter extends RecyclerView.Adapter<AlarmContactAdapte
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.contact_edit:
-                    Toast.makeText(mContext, "Edit", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.add_new_contact:
-                    Toast.makeText(mContext, "Edit", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.contact_delete:
-                    Toast.makeText(mContext, "Delete", Toast.LENGTH_SHORT).show();
                     return true;
                 default:
             }
@@ -105,10 +84,6 @@ public class AlarmContactAdapter extends RecyclerView.Adapter<AlarmContactAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     int position = getAdapterPosition();
-
-//                    Snackbar.make(v, "Click detected on item " + position,
-//                            Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
                     EditContactActivity.pos = position;
                     showPopupMenu(holder1.overflow);
 
@@ -134,14 +109,6 @@ public class AlarmContactAdapter extends RecyclerView.Adapter<AlarmContactAdapte
         holder.titleNumber.setText(data.get(position).getTel());
         holder.titleEmail.setText(data.get(position).getEmail());
 
-//        holder.overflow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                showPopupMenu(holder.overflow);
-//
-//            }
-//        });
     }
 
 

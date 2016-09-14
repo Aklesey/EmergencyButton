@@ -8,8 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.qoobico.emergencybutton.fragment.AbstractTabFragment;
 import com.qoobico.emergencybutton.fragment.ContactFragment;
-import com.qoobico.emergencybutton.fragment.HistoryFragment;
-import com.qoobico.emergencybutton.fragment.SettingsFragment;
+import com.qoobico.emergencybutton.fragment.InstructionsFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +17,7 @@ public class TabsFragmentAdapter extends FragmentPagerAdapter {
 
     private Map<Integer, AbstractTabFragment> tabs;
     private Context context;
+
 
     public TabsFragmentAdapter(Context context, FragmentManager fm) {
         super(fm);
@@ -44,7 +44,6 @@ public class TabsFragmentAdapter extends FragmentPagerAdapter {
     private void initTabMap(Context context) {
         tabs = new HashMap<>();
         tabs.put(0, ContactFragment.getInstance(context));
-        tabs.put(1, SettingsFragment.getInstance(context));
-        tabs.put(2, HistoryFragment.getInstance(context));
+        tabs.put(1, InstructionsFragment.getInstance(context));
     }
 }

@@ -1,1 +1,1 @@
-include ':app', ':jackson-all-1.9.11'
+include ':app', ':jackson-all-1.9.11', ':activation', ':additionnal', ':mail'

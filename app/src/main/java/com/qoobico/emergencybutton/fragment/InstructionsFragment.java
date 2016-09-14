@@ -9,21 +9,19 @@ import android.view.ViewGroup;
 
 import com.qoobico.emergencybutton.R;
 
-
-public class HistoryFragment extends AbstractTabFragment {
+public class InstructionsFragment extends AbstractTabFragment {
     private final static int LAYOUT = R.layout.fragment_example;
 
-    public static HistoryFragment getInstance(Context context) {
+    public static InstructionsFragment getInstance(Context context) {
 
         Bundle args = new Bundle();
-        HistoryFragment fragment = new HistoryFragment();
+        InstructionsFragment fragment = new InstructionsFragment();
         fragment.setArguments(args);
         fragment.setContext(context);
-        fragment.setTitle(context.getString(R.string.tab_item_history));
+        fragment.setTitle(context.getString(R.string.tab_item_instructions));
 
         return fragment;
     }
-
 
     @Nullable
     @Override

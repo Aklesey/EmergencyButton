@@ -51,7 +51,7 @@ public class EditContactActivity extends AppCompatActivity {
 
     public void saveContact(View view) {
         data = MainActivity.getAllContacts();
-        Toast.makeText(getApplicationContext(), "Contact has changed.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), R.string.contact_chenging, Toast.LENGTH_SHORT).show();
         fillListAdapter();
         Intent SecAct = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(SecAct);

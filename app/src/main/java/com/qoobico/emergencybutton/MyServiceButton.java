@@ -21,7 +21,7 @@ import com.qoobico.emergencybutton.adapter.MailSenderClass;
 import com.qoobico.emergencybutton.fragment.AddContactActivity;
 
 
-public class MyService extends Service {
+public class MyServiceButton extends Service {
 
     static int anInt = 0;
     final String LOG_TAG = "myLogs";
@@ -66,12 +66,12 @@ public class MyService extends Service {
 
     public void onCreate() {
         super.onCreate();
-        Log.d(LOG_TAG, "onCreate");
+        Log.d(LOG_TAG, "onCreateasdasdasdas");
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         mainContext = this;
-        Log.d(LOG_TAG, "onStartCommand");
+        Log.d(LOG_TAG, "onStartCommandasdasdasdas");
         IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(mScreenReceiver, intentFilter);
@@ -97,11 +97,11 @@ public class MyService extends Service {
 
     public void onDestroy() {
         super.onDestroy();
-        Log.d(LOG_TAG, "onDestroy");
+        Log.d(LOG_TAG, "onDestroyasdasdasdas");
     }
 
     public IBinder onBind(Intent intent) {
-        Log.d(LOG_TAG, "onBind");
+        Log.d(LOG_TAG, "onBindadasdasdasd");
         return null;
     }
 
@@ -109,15 +109,15 @@ public class MyService extends Service {
         if ((System.currentTimeMillis() - screen_start_time) > (screen_max_time * screen_status)) {
             screen_status = 0;
         }
-        Log.i(LOG_TAG, "shoto");
-        if (screen_status == 3) {
+        Log.i(LOG_TAG, "shotoqqqqqqdadsadas");
 
-            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.vibrate(1000L);
 
-            listener();
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(1000L);
 
-        }
+        listener();
+
+
     }
 
     protected void task() {
@@ -133,16 +133,16 @@ public class MyService extends Service {
             try {
                 startActivity(callIntent);
             } catch (Exception e) {
-                Log.i(LOG_TAG, "___" + e);
+                Log.i(LOG_TAG, "qqqqqqqqqqqq___" + e);
             }
             anInt++;
         } else {
             anInt = 0;
             voider();
             stopService(new Intent(this, MyServiceButton.class));
-            return;
+            onDestroy();
         }
-        Log.i(LOG_TAG, "__=" + anInt);
+        Log.i(LOG_TAG, "__= 1111111111111111" + anInt);
     }
 
     String title = "SOS, ALARM, HELP ME";
@@ -177,7 +177,6 @@ public class MyService extends Service {
             MailSenderClass sender = new MailSenderClass(from, "nhfvdfq77");
             try {
 
-
                 text += "\nhttp://maps.google.com/?q=" + lat + "," + lon;
 
 
@@ -201,20 +200,18 @@ public class MyService extends Service {
     }
 
     private void listener() {
-        EndCallListener callListener = new EndCallListener(this);
+        EndCallListenerButton callListener = new EndCallListenerButton(this);
         TelephonyManager mTM;
         mTM = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         mTM.listen(callListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
-
 }
 
-
-class EndCallListener extends PhoneStateListener {
+class EndCallListenerButton extends PhoneStateListener {
     final String LOG_TAG = "myLogs";
-    MyService myService;
+    MyServiceButton myService;
 
-    public EndCallListener(MyService myService) {
+    public EndCallListenerButton(MyServiceButton myService) {
         this.myService = myService;
     }
 
@@ -230,3 +227,5 @@ class EndCallListener extends PhoneStateListener {
         }
     }
 }
+
+
